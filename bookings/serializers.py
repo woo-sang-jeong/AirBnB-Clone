@@ -28,6 +28,16 @@ class CreateRoomBookingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Can't book in the past!")
         return value
 
+    def validate(self, data):
+        if data["check_out"] <= data["check_in"]:
+            raise serializers.ValidationError("oh! my!")
+        if Booking.objects.filter(
+            check_in__lte=data["check_out"],
+            check_out__gte=data["check_in"],
+        ).exists():
+            raise serializers.ValidationError("already taken")
+        return data
+
 
 class PublicBookingSerializer(serializers.ModelSerializer):
     class Meta:
