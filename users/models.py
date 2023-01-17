@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-
 
 class User(AbstractUser):
     class GenderChoices(models.TextChoices):
@@ -14,7 +12,7 @@ class User(AbstractUser):
         EN = ("en", "English")
 
     class CurrencyChoices(models.TextChoices):
-        WOn = "won", "Korean Won"
+        WON = "won", "Korean Won"
         USD = "usd", "Dollar"
 
     first_name = models.CharField(
@@ -26,14 +24,11 @@ class User(AbstractUser):
         editable=False,
     )
     avatar = models.URLField(blank=True)
-
     name = models.CharField(
         max_length=150,
         default="",
     )
-    is_host = models.BooleanField(
-        null=True,
-    )
+    is_host = models.BooleanField(default=False)
     gender = models.CharField(
         max_length=10,
         choices=GenderChoices.choices,
