@@ -20,6 +20,7 @@ class CustomUserAdmin(UserAdmin):
                     "language",
                     "currency",
                 ),
+                "classes": ("wide",),
             },
         ),
         (
@@ -36,7 +37,7 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
         (
-            "Impoertant Dates",
+            "Important Dates",
             {
                 "fields": ("last_login", "date_joined"),
                 "classes": ("collapse",),

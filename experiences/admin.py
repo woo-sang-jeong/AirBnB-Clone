@@ -5,7 +5,15 @@ from .models import Experience, Perk
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
 
-    list_display = ("name", "price", "start", "end", "created_at")
+    list_display = (
+        "name",
+        "price",
+        "start",
+        "end",
+        "created_at",
+    )
+
+    list_filter = ("category",)
 
 
 @admin.register(Perk)
@@ -16,5 +24,3 @@ class PerkAdmin(admin.ModelAdmin):
         "details",
         "explanation",
     )
-
-    list_filter = ("category",)

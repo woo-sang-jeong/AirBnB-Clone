@@ -4,7 +4,7 @@ from common.models import CommonModel
 
 class Experience(CommonModel):
 
-    """Experience Model definition"""
+    """Experience Model Definiiton"""
 
     country = models.CharField(
         max_length=50,
@@ -20,21 +20,25 @@ class Experience(CommonModel):
     host = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
+        related_name="experiences",
     )
     price = models.PositiveIntegerField()
-    address = models.CharField(max_length=250)
+    address = models.CharField(
+        max_length=250,
+    )
     start = models.TimeField()
     end = models.TimeField()
     description = models.TextField()
     perks = models.ManyToManyField(
         "experiences.Perk",
+        related_name="experiences",
     )
-
     category = models.ForeignKey(
         "categories.Category",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+        related_name="experiences",
     )
 
     def __str__(self) -> str:
@@ -60,10 +64,3 @@ class Perk(CommonModel):
 
     def __str__(self) -> str:
         return self.name
-
-    category = models.ForeignKey(
-        "categories.Category",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-    )

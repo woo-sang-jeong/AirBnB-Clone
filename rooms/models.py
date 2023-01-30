@@ -1,12 +1,10 @@
 from django.db import models
 from common.models import CommonModel
 
-# Create your models here.
-
 
 class Room(CommonModel):
 
-    """Room model Definition"""
+    """Room Model Definition"""
 
     class RoomKindChoices(models.TextChoices):
         ENTIRE_PLACE = ("entire_place", "Entire Place")
@@ -48,7 +46,6 @@ class Room(CommonModel):
         "rooms.Amenity",
         related_name="rooms",
     )
-
     category = models.ForeignKey(
         "categories.Category",
         null=True,
@@ -57,24 +54,26 @@ class Room(CommonModel):
         related_name="rooms",
     )
 
-    def __str__(self) -> str:
-        return self.name
+    def __str__(room) -> str:
+        return room.name
+
+    def total_amenities(room):
+        return room.amenities.count()
 
     def rating(room):
         count = room.reviews.count()
         if count == 0:
-            return "No Reviews"
+            return 0
         else:
             total_rating = 0
-            print(room.reviews.all().values("rating"))
             for review in room.reviews.all().values("rating"):
                 total_rating += review["rating"]
-                return round(total_rating / count, 2)
+            return round(total_rating / count, 2)
 
 
 class Amenity(CommonModel):
 
-    """Amenity Definition"""
+    """Amenity Definiton"""
 
     name = models.CharField(
         max_length=150,

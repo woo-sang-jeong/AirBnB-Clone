@@ -4,10 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotFound
+from rest_framework.permissions import IsAuthenticated
+
+from users.models import User
 from . import serializers
-from .models import User
 
 
 class Me(APIView):
@@ -16,8 +17,8 @@ class Me(APIView):
 
     def get(self, request):
         user = request.user
-        serializer = serializers.PrivateUserSerializer(user).data
-        return Response(serializer)
+        serializer = serializers.PrivateUserSerializer(user)
+        return Response(serializer.data)
 
     def put(self, request):
         user = request.user
@@ -91,7 +92,7 @@ class LogIn(APIView):
         )
         if user:
             login(request, user)
-            return Response({"oh": "welcome!"})
+            return Response({"ok": "Welcome!"})
         else:
             return Response({"error": "wrong password"})
 
@@ -102,7 +103,7 @@ class LogOut(APIView):
 
     def post(self, request):
         logout(request)
-        return Response({"ok": "bye"})
+        return Response({"ok": "bye!"})
 
 
 class JWTLogIn(APIView):
