@@ -200,6 +200,15 @@ class RoomPhotos(APIView):
         except Room.DoesNotExist:
             raise NotFound
 
+    # React에서 읽어 들이지 못해서 임시로 만듬
+    def get(self, request, pk):
+        room = self.get_object(pk)
+        serializer = PhotoSerializer(
+            room.photos.all(),
+            many=True,
+        )
+        return Response(serializer.data)
+
     def post(self, request, pk):
         room = self.get_object(pk)
         if request.user != room.owner:
