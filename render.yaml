@@ -1,0 +1,22 @@
+databases:
+  - name: weconnect
+    databaseName: weconnect
+    user: weconnect
+    region: singapore
+
+services:
+  - type: web
+    name: weconnect
+    env: python
+    region: singapore
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: weconnect
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
