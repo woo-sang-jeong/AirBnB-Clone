@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "airbnb_clone_backend"
+name = "airbnb-clone-backend"
 version = "0.1.0"
 description = ""
 authors = ["woo-sang-jeong <jeongwoosangdev@gmail.com>"]
